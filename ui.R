@@ -1,3 +1,4 @@
+###### PACKAGES
 library(shiny)
 library(shinyjs)
 library(leaflet)
@@ -8,11 +9,11 @@ library(ggplot2)
 ###updates--- to get datazones that have been clicked
 ### http://stackoverflow.com/questions/28938642/marker-mouse-click-event-in-r-leaflet-for-shiny
 
-
+####### READ LIST OF LOCAL AUTHORITIES
 list<-read.csv("data/list.csv", header=F)
 list<-list[1:nrow(list),]
 
-##
+####### NOT SURE
 textInputRow<-function (inputId, label, value = "") 
 {
   div(style="display:inline-block",
@@ -20,13 +21,12 @@ textInputRow<-function (inputId, label, value = "")
       tags$input(id = inputId, type = "text", value = value,class="input-small"))
 }
 
-
+####### Shiny fluid page set sup
 shinyUI(fluidPage(
   useShinyjs(),  # Include shinyjs
   
-# geolocation
+# Set the fonts and css for map window
 tags$style(type = "text/css", "#map {height: calc(100vh - 160px) !important;}"),
-
 tags$head(
   tags$style(HTML("
                   @import url('//fonts.googleapis.com/css?family=Roboto+Slab');
@@ -74,12 +74,13 @@ headerPanel(
     ),
     
     selectizeInput('LAinput', 'Local Authorities', choices = list, multiple = TRUE, options = list(maxItems = 5)),
+    div(style="display:inline-block", textInput("str", label =("Enter an Area of Interest"), value = "")),
     #div(style="display:inline-block", textInput("str", label =("Enter an Area of Interest"), value = "")),
     #bsTooltip("str", "Tip: Type in an address, postcode or point of interest and click Enter. The location will be shown as a blue marker with data for the surrounding area local area presented on the map.", "top"
     #),
-    #div(style="display:inline-block",actionButton("goButton", "Enter")),
-    #tags$br(),
-    #tags$br(),
+    div(style="display:inline-block",actionButton("goButton", "Enter")),
+    tags$br(),
+    tags$br(),
     uiOutput("Feature"),
     bsTooltip("Feature", "Tip: Choose the feature you wish to view change for", "top"
     ),
